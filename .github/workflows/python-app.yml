@@ -19,7 +19,7 @@ jobs:
           main: main
           artifact: formatting
           use-dependencies: true
-          icon: 'icon.ico'
+          icon: 'icon'
           no-console: true
     
       - name: Create Release
