@@ -4,9 +4,9 @@
 name: Python application
 
 on:
-  workflow_dispatch:
-
-permissions: write-all
+  push:
+    tags:
+      - "v*"
 
 jobs:
   build_windows:
@@ -28,8 +28,14 @@ jobs:
         run: |
           pyinstaller --onefile --noconsole --name formatting --icon=icon.ico --distpath ./ main.py
 
+      - name: Zip
+        run: |
+          tar -a -c -f LatexFormatting-${{ github.ref }}-win.zip formatting.exe
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: false
           prerelease: false
